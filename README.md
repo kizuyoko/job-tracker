@@ -1,75 +1,43 @@
-# React + TypeScript + Vite
+# Job Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small job application tracker, built over a weekend as an experiment in AI-assisted development.
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Add a company
+- Change its status (Applied / Interview / Rejected) and save it
+- Delete an application, with a confirmation
 
-## React Compiler
+## Tech stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React + TypeScript (Vite)
+- Tailwind CSS
+- Supabase (PostgreSQL)
+- GitHub
 
-## Expanding the ESLint configuration
+## How I worked
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+I used AI to generate code and to explain errors, and made the design decisions myself:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Split the list row into its own component under `src/components/`
+- Moved the shared type into `src/types/`
+- Changed the status dropdown to use an explicit Save button instead of saving on every change
+- Added a confirmation before deleting
+- Enabled Row Level Security on the table and reviewed the generated policy
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Known limitations
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- There is no login. The Row Level Security policy is a temporary one that allows anyone with the public key to read and write, so this is for local use with dummy data only.
+- Errors are shown but never cleared.
+- Data fetching could be moved into a custom hook.
 
-```
+## Run locally
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+1. Create a Supabase project and an `applications` table (`id`, `company`, `status`, `notes`, `created_at`)
+2. Add a `.env.local` file:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+   VITE_SUPABASE_URL=your project URL
+   VITE_SUPABASE_ANON_KEY=your publishable key
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+3. `npm install`
+4. `npm run dev`
