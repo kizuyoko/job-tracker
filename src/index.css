@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@layer base {
+  *,
+  ::after,
+  ::before {
+    border-color: var(--color-gray-300);
+  }
+
+  body {
+    color: var(--color-gray-700);
+  }
+}

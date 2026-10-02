@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabase'
-
-type Application = {
-  id: string
-  company: string
-  status: string
-  notes: string | null
-  created_at: string
-}
+import ApplicationRow from './components/ApplicationRow'
+import type { Application } from './types/application'
 
 export default function App() {
   const [items, setItems] = useState<Application[]>([])
@@ -43,6 +37,7 @@ export default function App() {
   }
 
   async function remove(id: string) {
+    if (!window.confirm('Delete this application?')) return
     const { error } = await supabase
       .from('applications')
       .delete()
@@ -52,6 +47,7 @@ export default function App() {
   }
 
   useEffect(() => {
+     // eslint-disable-next-line react-hooks/set-state-in-effect
     load()
   }, [])
 
@@ -69,32 +65,18 @@ export default function App() {
           value={company}
           onChange={(e) => setCompany(e.target.value)}
         />
-        <button className="rounded bg-black px-4 py-2 text-white" onClick={add}>
+        <button className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700" onClick={add}>
           Add
         </button>
       </div>
       <ul className="space-y-2">
         {items.map((a) => (
-          <li key={a.id} className="rounded border p-3">
-            <div className="flex items-center justify-between">
-              <div className="font-semibold">{a.company}</div>
-              <button
-                className="text-sm text-red-600 hover:underline"
-                onClick={() => remove(a.id)}
-              >
-                Delete
-              </button>
-            </div>
-            <select
-              className="mt-1 rounded border px-2 py-1 text-sm"
-              value={a.status}
-              onChange={(e) => updateStatus(a.id, e.target.value)}
-            >
-              <option value="applied">Applied</option>
-              <option value="interview">Interview</option>
-              <option value="rejected">Rejected</option>
-            </select>
-          </li>
+          <ApplicationRow
+            key={a.id}
+            item={a}
+            onUpdateStatus={updateStatus}
+            onRemove={remove}
+          />
         ))}
       </ul>
     </div>
