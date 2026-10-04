@@ -2,11 +2,22 @@ import { useEffect, useState } from 'react'
 import { supabase } from './supabase'
 import ApplicationRow from './components/ApplicationRow'
 import type { Application } from './types/application'
+import type { Session } from '@supabase/supabase-js'
+import Login from './components/Login'
 
 export default function App() {
   const [items, setItems] = useState<Application[]>([])
   const [error, setError] = useState<string | null>(null)
   const [company, setCompany] = useState('')
+  const [session, setSession] = useState<Session | null>(null)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setSession(data.session))
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, s) => {
+      setSession(s)
+    })
+    return () => listener.subscription.unsubscribe()
+  }, [])
 
   async function load() {
     const { data, error } = await supabase
@@ -51,9 +62,19 @@ export default function App() {
     load()
   }, [])
 
+  if (!session) return <Login />
+
   return (
     <div className="mx-auto max-w-xl p-6">
-      <h1 className="mb-4 text-2xl font-bold">Job Tracker</h1>
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Job Tracker</h1>
+        <button
+          className="rounded border px-3 py-1 text-sm hover:bg-gray-50"
+          onClick={() => supabase.auth.signOut()}
+        >
+          Sign out
+        </button>
+      </div>
       {error && <p className="text-red-600">Error: {error}</p>}
       {items.length === 0 && !error && (
         <p className="text-gray-500">No applications yet</p>
