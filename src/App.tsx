@@ -22,7 +22,7 @@ export default function App() {
   if (!session) return <Login />
 
   return (
-    <div className="mx-auto max-w-xl p-6">
+    <div className="mx-auto flex min-h-screen max-w-xl flex-col justify-center p-6">
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Job Tracker</h1>
         <SignOutButton />

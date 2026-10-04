@@ -19,7 +19,7 @@ export default function Login() {
   }
 
   return (
-    <div className="mx-auto max-w-sm p-6">
+    <div className="mx-auto flex min-h-screen max-w-sm flex-col justify-center p-6">
       <h1 className="mb-4 text-2xl font-bold">Job Tracker</h1>
       <div className="space-y-2">
         <input
