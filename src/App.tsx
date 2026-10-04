@@ -31,7 +31,7 @@ export default function App() {
           <SignOutButton />
         </div>
       </div>
-      {error && <p className="text-red-600">Error: {error}</p>}
+      {error && <p className="text-red-600 dark:text-red-400">Error: {error}</p>}
       {items.length === 0 && !error && (
         <p className="text-gray-500">No applications yet</p>
       )}

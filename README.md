@@ -9,6 +9,7 @@ A small job application tracker, built over a weekend as an experiment in AI-ass
 - Change its status (Applied / Interview / Rejected) and save it
 - Delete an application, with a confirmation
 - Each user can only see and edit their own applications
+- Light and dark mode, with a toggle that remembers your choice
 
 ## Tech stack
 

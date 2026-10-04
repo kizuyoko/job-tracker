@@ -73,7 +73,7 @@ export default function Login() {
             Sign up
           </button>
         </div>
-        {message && <p className="text-sm text-red-600">{message}</p>}
+        {message && <p className="text-sm text-red-600 dark:text-red-400">{message}</p>}
       </div>
     </div>
   )
