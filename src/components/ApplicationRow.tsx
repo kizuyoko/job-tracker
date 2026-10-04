@@ -22,7 +22,7 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove }: Props
                 </button>
             </div>
             <select
-                className="mt-1 rounded border px-2 py-1 text-sm"
+                className="mt-1 rounded border bg-white px-2 py-1 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
             >

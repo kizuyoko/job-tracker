@@ -6,6 +6,7 @@ import ApplicationRow from './components/ApplicationRow'
 import AddForm from './components/AddForm'
 import Login from './components/Login'
 import SignOutButton from './components/SignOutButton'
+import ThemeToggle from './components/ThemeToggle'
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null)
@@ -25,7 +26,10 @@ export default function App() {
     <div className="mx-auto flex min-h-screen max-w-xl flex-col justify-center p-6">
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Job Tracker</h1>
-        <SignOutButton />
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <SignOutButton />
+        </div>
       </div>
       {error && <p className="text-red-600">Error: {error}</p>}
       {items.length === 0 && !error && (

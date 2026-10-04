@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../supabase'
+import ThemeToggle from './ThemeToggle'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -20,7 +21,10 @@ export default function Login() {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-sm flex-col justify-center p-6">
-      <h1 className="mb-4 text-2xl font-bold">Job Tracker</h1>
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Job Tracker</h1>
+        <ThemeToggle />
+      </div>
       <div className="space-y-2">
         <input
           className="w-full rounded border px-3 py-2"
@@ -39,7 +43,7 @@ export default function Login() {
             />
             <button
                 type="button"
-                className="absolute inset-y-0 right-0 px-3 text-gray-500 hover:text-gray-700"
+                className="absolute inset-y-0 right-0 px-3 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
                 onClick={() => setShowPassword(!showPassword)}
             >
@@ -63,7 +67,7 @@ export default function Login() {
             Sign in
           </button>
           <button
-            className="rounded border px-4 py-2 hover:bg-gray-50"
+            className="rounded border px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
             onClick={signUp}
           >
             Sign up
