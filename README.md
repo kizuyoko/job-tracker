@@ -38,4 +38,20 @@ I used AI to generate code and to explain errors, and made the design decisions 
 
 1. Create a Supabase project and run this in the SQL Editor:
 
+```sql
    create table applications (
+     id uuid primary key default gen_random_uuid(),
+     company text not null,
+     status text not null default 'applied',
+     notes text,
+     created_at timestamptz not null default now(),
+     user_id uuid references auth.users (id) default auth.uid()
+   );
+
+   alter table applications enable row level security;
+
+   create policy "users manage own applications"
+   on applications for all to authenticated
+   using (auth.uid() = user_id)
+   with check (auth.uid() = user_id);
+```
