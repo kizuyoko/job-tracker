@@ -6,7 +6,10 @@ type Props = {
 
 export default function InterviewRow({ interview }: Props) {
   const date = interview.interview_date
-    ? new Date(interview.interview_date).toLocaleDateString('sv-SE')
+    ? new Date(interview.interview_date).toLocaleString('sv-SE', {
+        dateStyle: 'short',
+        timeStyle: 'short',
+    })
     : 'The date is not settled yet.'
 
   return (
