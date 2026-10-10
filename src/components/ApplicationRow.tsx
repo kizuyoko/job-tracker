@@ -2,6 +2,7 @@ import { useState } from "react"
 import type { Application } from "../types/application"
 import { useInterviews } from "../hooks/useInterviews"
 import InterviewRow from "./InterviewRow"
+import InterviewForm from "./InterviewForm"
 
 type Props = {
     item: Application
@@ -11,7 +12,7 @@ type Props = {
 
 export default function ApplicationRow({ item, onUpdateStatus, onRemove }: Props) {
     const [draft, setDraft] = useState(item.status)
-    const { items: interviews } = useInterviews(item.id)
+    const { items: interviews, add, remove } = useInterviews(item.id)
 
     return (
         <li className="rounded border p-3">
@@ -44,10 +45,11 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove }: Props
             {interviews.length > 0 && (
                 <div className="mt-3 space-y-2">
                     {interviews.map((interview) => (
-                        <InterviewRow key={interview.id} interview={interview} />
+                        <InterviewRow key={interview.id} interview={interview} onRemove={remove} />
                     ))}
                 </div>
             )}
+            <InterviewForm onAdd={add} />
         </li>
     )
 }
