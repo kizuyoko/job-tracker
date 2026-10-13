@@ -19,9 +19,9 @@ export function useApplications(loggedIn: boolean) {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (loggedIn) load()
   }, [loggedIn, load])
-
-  async function add(company: string) {
-    const { error } = await supabase.from('applications').insert({ company })
+  
+  async function add(company: string, description: string | null) {
+    const { error } = await supabase.from('applications').insert({ company, description: description || null })
     if (error) setError(error.message)
     else load()
   }
@@ -30,6 +30,15 @@ export function useApplications(loggedIn: boolean) {
     const { error } = await supabase
       .from('applications')
       .update({ status })
+      .eq('id', id)
+    if (error) setError(error.message)
+    else load()
+  }
+
+  async function update(id: string, company: string, description: string | null, status: string) {
+    const { error } = await supabase
+      .from('applications')
+      .update({ status, company, description: description || null })
       .eq('id', id)
     if (error) setError(error.message)
     else load()
@@ -45,5 +54,5 @@ export function useApplications(loggedIn: boolean) {
     else load()
   }
 
-  return { items, error, add, updateStatus, remove }
+  return { items, error, add, update, updateStatus, remove }
 }

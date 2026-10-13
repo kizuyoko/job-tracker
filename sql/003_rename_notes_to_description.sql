@@ -1,0 +1,1 @@
+alter table applications rename column notes to description;
