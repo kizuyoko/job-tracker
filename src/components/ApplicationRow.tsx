@@ -20,24 +20,31 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
 
     return (
         <li className="rounded border p-3">
-            <div className="flex items-start justify-between">
+            <div className="flex items-start justify-between mb-2">
                 <div className="flex-1 flex flex-col gap-1 mr-2">
-                    {isEditing ? (
-                        <input
-                            className="rounded border px-2 py-1 font-semibold"
-                            value={editCompany}
-                            onChange={(e) => setEditCompany(e.target.value)}
-                        />
+                     {isEditing ? (
+                        <>
+                            <input
+                                className="rounded border px-2 py-1 font-semibold mb-1"
+                                value={editCompany}
+                                onChange={(e) => setEditCompany(e.target.value)}
+                            />
+                            <textarea
+                                className="rounded border px-2 py-1 text-sm"
+                                placeholder="Description"
+                                value={editDescription}
+                                onChange={(e) => setEditDescription(e.target.value)}
+                            />
+                        </>
                     ) : (
-                        <div className="font-semibold">{item.company}</div>
-                    )}
-                    {isEditing && (
-                        <textarea
-                            className="mt-2 w-full rounded border px-2 py-1 text-sm"
-                            placeholder="Description"
-                            value={editDescription}
-                            onChange={(e) => setEditDescription(e.target.value)}
-                        />
+                        <>
+                            <div className="font-semibold">{item.company}</div>
+                            {item.description && (
+                                <div className="text-sm text-gray-600 dark:text-gray-300">
+                                    {item.description}
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
                 <div className="flex gap-2">
