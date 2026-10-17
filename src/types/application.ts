@@ -2,6 +2,6 @@ export type Application = {
     id: string
     company: string
     status: string
-    notes: string | null
+    description: string | null
     created_at: string
 }
