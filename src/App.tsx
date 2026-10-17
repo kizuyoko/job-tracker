@@ -10,7 +10,7 @@ import ThemeToggle from './components/ThemeToggle'
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null)
-  const { items, error, add, updateStatus, remove } = useApplications(!!session)
+  const { items, error, add, update, updateStatus, remove } = useApplications(!!session)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session))
@@ -42,6 +42,7 @@ export default function App() {
             key={a.id}
             item={a}
             onUpdateStatus={updateStatus}
+            onUpdate={update}
             onRemove={remove}
           />
         ))}
