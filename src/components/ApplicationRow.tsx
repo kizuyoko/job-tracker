@@ -56,6 +56,7 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
                                 onClick={async () => {
                                     const message = await onUpdate(item.id, editCompany, editDescription || null, draft)
                                     setHelloMessage(message)
+                                    setTimeout(() => setHelloMessage(null), 3000)                                   
                                     setIsEditing(false)
                                 }}
                             >
