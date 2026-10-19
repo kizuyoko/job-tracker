@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { supabase } from '../supabase'
 import ThemeToggle from './ThemeToggle'
 import Button from './ui/Button'
+import Input from './ui/Input'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -27,16 +28,16 @@ export default function Login() {
         <ThemeToggle />
       </div>
       <div className="space-y-2">
-        <input
-          className="w-full rounded border px-3 py-2"
+        <Input
+          className="w-full"
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <div className="relative">
-            <input
-                className="w-full rounded border px-3 py-2 pr-10"
+            <Input
+                className="w-full"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Password (6+ characters)"
                 value={password}

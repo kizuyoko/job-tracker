@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Button from './ui/Button'
+import Input from './ui/Input'
 
 type Props = {
   onAdd: (company: string, description: string | null) => void
@@ -19,8 +20,8 @@ export default function AddForm({ onAdd }: Props) {
   return (
     <section className="mb-4">
       <div className="mb-2 flex gap-2">
-        <input
-          className="flex-1 rounded border px-3 py-2"
+        <Input
+          className="flex-1"
           placeholder="Company name"
           value={company}
           onChange={(e) => setCompany(e.target.value)}
