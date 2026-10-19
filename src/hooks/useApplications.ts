@@ -41,7 +41,11 @@ export function useApplications(loggedIn: boolean) {
       .update({ status, company, description: description || null })
       .eq('id', id)
     if (error) setError(error.message)
-    else load()
+    else {
+      load()
+      const { data, error: helloError } = await supabase.functions.invoke('hello')
+      console.log('hello:', data, helloError)
+    }
   }
 
   async function remove(id: string) {
