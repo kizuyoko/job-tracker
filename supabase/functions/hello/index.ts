@@ -7,5 +7,5 @@ Deno.serve((req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
-  return new Response('Hello, Yoko!!', { headers: corsHeaders })
+  return new Response('The data has been updated.', { headers: corsHeaders })
 })
