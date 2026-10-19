@@ -35,16 +35,19 @@ export function useApplications(loggedIn: boolean) {
     else load()
   }
 
-  async function update(id: string, company: string, description: string | null, status: string) {
+  async function update(id: string, company: string, description: string | null, status: string): Promise<string | null> {
     const { error } = await supabase
       .from('applications')
       .update({ status, company, description: description || null })
       .eq('id', id)
-    if (error) setError(error.message)
-    else {
+    if (error) {
+      setError(error.message)
+      return null
+    } else {
       load()
       const { data, error: helloError } = await supabase.functions.invoke('hello')
       console.log('hello:', data, helloError)
+      return helloError ? null : data
     }
   }
 

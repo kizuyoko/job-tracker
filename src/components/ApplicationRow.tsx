@@ -8,7 +8,7 @@ type Props = {
     item: Application
     onUpdateStatus: (id: string, status: string) => void
     onRemove: (id: string) => void
-    onUpdate: (id: string, company: string, description: string | null, status: string) => void
+    onUpdate: (id: string, company: string, description: string | null, status: string) => Promise<string | null>
 }
 
 export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdate }: Props) {
@@ -17,6 +17,7 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
     const [isEditing, setIsEditing] = useState(false)
     const [editCompany, setEditCompany] = useState(item.company)
     const [editDescription, setEditDescription] = useState(item.description ?? '')
+    const [helloMessage, setHelloMessage] = useState<string | null>(null)
 
     return (
         <li className="rounded border p-3">
@@ -52,8 +53,9 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
                         <>
                             <button
                                 className="rounded bg-green-600 px-3 py-1 text-sm text-white hover:bg-green-700"
-                                onClick={() => {
-                                    onUpdate(item.id, editCompany, editDescription || null, draft)
+                                onClick={async () => {
+                                    const message = await onUpdate(item.id, editCompany, editDescription || null, draft)
+                                    setHelloMessage(message)
                                     setIsEditing(false)
                                 }}
                             >
@@ -88,6 +90,9 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
                     )}
                 </div>
             </div>
+            {helloMessage && (
+                <p className="mb-2 text-sm text-green-600">{helloMessage}</p>
+            )}            
             <select
                 className="mt-1 rounded border bg-white px-2 py-1 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 value={draft}
