@@ -3,6 +3,7 @@ import type { Application } from "../types/application"
 import { useInterviews } from "../hooks/useInterviews"
 import InterviewRow from "./InterviewRow"
 import InterviewForm from "./InterviewForm"
+import Button from "./ui/Button"
 
 type Props = {
     item: Application
@@ -51,42 +52,26 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
                 <div className="flex gap-2">
                     {isEditing ? (
                         <>
-                            <button
-                                className="rounded bg-green-600 px-3 py-1 text-sm text-white hover:bg-green-700"
+                            <Button color="green"
                                 onClick={async () => {
                                     const message = await onUpdate(item.id, editCompany, editDescription || null, draft)
                                     setHelloMessage(message)
-                                    setTimeout(() => setHelloMessage(null), 3000)                                   
+                                    setTimeout(() => setHelloMessage(null), 3000)
                                     setIsEditing(false)
                                 }}
-                            >
-                                Save
-                            </button>
-                            <button
-                                className="rounded bg-gray-500 px-3 py-1 text-sm text-white hover:bg-gray-600"
+                            >Save</Button>
+                            <Button color="gray"
                                 onClick={() => {
                                     setEditCompany(item.company)
                                     setEditDescription(item.description ?? '')
                                     setIsEditing(false)
                                 }}
-                            >
-                                Cancel
-                            </button>
+                            >Cancel</Button>
                         </>
                     ) : (
                         <>
-                            <button
-                                className="rounded bg-green-600 px-3 py-1 text-sm text-white hover:bg-green-700"
-                                onClick={() => setIsEditing(true)}
-                            >
-                                Update
-                            </button>
-                            <button
-                                className="rounded bg-red-600 px-3 py-1 text-sm text-white hover:bg-red-700"
-                                onClick={() => onRemove(item.id)}
-                            >
-                                Delete
-                            </button>
+                            <Button color="green" onClick={() => setIsEditing(true)}>Update</Button>
+                            <Button color="red" onClick={() => onRemove(item.id)}>Delete</Button>
                         </>
                     )}
                 </div>
@@ -104,12 +89,9 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
                 <option value="rejected">Rejected</option>
             </select>
             {draft !== item.status && (
-                <button
-                    className="ml-2 rounded bg-green-600 px-3 py-1 text-sm text-white hover:bg-green-700"
-                    onClick={() => onUpdateStatus(item.id, draft)}
-                >
+                <Button color="green" className="ml-2" onClick={() => onUpdateStatus(item.id, draft)}>
                     Save
-                </button>
+                </Button>
             )}
             {interviews.length > 0 && (
                 <div className="mt-3 space-y-2">
