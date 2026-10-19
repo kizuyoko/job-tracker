@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../supabase'
-import type { Interview } from '../types/interview'
+import type { ActivityType, Interview } from '../types/interview'
 
 export function useInterviews(applicationId: string) {
   const [items, setItems] = useState<Interview[]>([])
@@ -21,10 +21,11 @@ export function useInterviews(applicationId: string) {
     load()
   }, [load])
 
-  async function add(interviewDate: string | null, notes: string) {
+  async function add(interviewDate: string | null, activityType: ActivityType, notes: string) {
     const { error } = await supabase.from('interviews').insert({
       application_id: applicationId,
       interview_date: interviewDate,
+      activity_type: activityType,
       notes: notes || null,
     })
     if (error) setError(error.message)
