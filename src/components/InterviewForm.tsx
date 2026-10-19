@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Button from './ui/Button'
 
 type Props = {
   onAdd: (interviewDate: string | null, notes: string) => void
@@ -29,12 +30,7 @@ export default function InterviewForm({ onAdd }: Props) {
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
       />
-      <button
-        className="rounded bg-blue-600 px-3 py-1 text-sm text-white hover:bg-blue-700"
-        onClick={submit}
-      >
-        Add
-      </button>
+      <Button color="blue" size="md" onClick={submit}>Add</Button>
     </div>
   )
 }

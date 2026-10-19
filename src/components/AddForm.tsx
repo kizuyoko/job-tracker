@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Button from './ui/Button'
 
 type Props = {
   onAdd: (company: string, description: string | null) => void
@@ -24,13 +25,7 @@ export default function AddForm({ onAdd }: Props) {
           value={company}
           onChange={(e) => setCompany(e.target.value)}
         />
-        
-        <button
-          className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-          onClick={submit}
-        >
-          Add
-        </button>
+        <Button color="blue" size="md" onClick={submit}>Add</Button>
       </div>
       <textarea
           className="w-full rounded border px-3 py-2"

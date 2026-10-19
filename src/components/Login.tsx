@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../supabase'
 import ThemeToggle from './ThemeToggle'
+import Button from './ui/Button'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -60,18 +61,12 @@ export default function Login() {
             </button>
         </div>
         <div className="flex gap-2">
-          <button
-            className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-            onClick={signIn}
-          >
+          <Button color="blue" size="md" onClick={signIn}>
             Sign in
-          </button>
-          <button
-            className="rounded border px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
-            onClick={signUp}
-          >
+          </Button>
+          <Button color="gray" size="md" onClick={signUp}>
             Sign up
-          </button>
+          </Button>
         </div>
         {message && <p className="text-sm text-red-600 dark:text-red-400">{message}</p>}
       </div>
