@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Button from './ui/Button'
 import Input from './ui/Input'
+import Textarea from './ui/Textarea'
 
 type Props = {
   onAdd: (company: string, description: string | null) => void
@@ -28,8 +29,8 @@ export default function AddForm({ onAdd }: Props) {
         />
         <Button color="blue" size="md" onClick={submit}>Add</Button>
       </div>
-      <textarea
-          className="w-full rounded border px-3 py-2"
+      <Textarea
+          className="w-full"
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}

@@ -4,6 +4,7 @@ import { useInterviews } from "../hooks/useInterviews"
 import InterviewRow from "./InterviewRow"
 import InterviewForm from "./InterviewForm"
 import Button from "./ui/Button"
+import Textarea from "./ui/Textarea"
 
 type Props = {
     item: Application
@@ -31,8 +32,9 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
                                 value={editCompany}
                                 onChange={(e) => setEditCompany(e.target.value)}
                             />
-                            <textarea
-                                className="rounded border px-2 py-1 text-sm"
+                            <Textarea
+                                size="sm"
+                                className="text-sm"
                                 placeholder="Description"
                                 value={editDescription}
                                 onChange={(e) => setEditDescription(e.target.value)}
