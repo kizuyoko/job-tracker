@@ -32,28 +32,31 @@ I used AI to generate code and to explain errors, and made the design decisions 
 
 ## Known limitations
 
-- Errors are shown but never cleared.
-- The `notes` column exists but has no UI yet.
+- Errors from saving or deleting an activity are not shown on screen, and errors that are shown are never cleared.
 - No password reset.
+- The code still uses "interview" in file and table names, while the screen says "Activity".
 
 ## Run locally
 
-1. Create a Supabase project and run this in the SQL Editor:
+1. Create a Supabase project.
 
-```sql
-   create table applications (
-     id uuid primary key default gen_random_uuid(),
-     company text not null,
-     status text not null default 'applied',
-     notes text,
-     created_at timestamptz not null default now(),
-     user_id uuid references auth.users (id) default auth.uid()
-   );
+2. In the SQL Editor, run the files in the `sql/` folder one by one, in this order:
+   1. `000_applications.sql`
+   2. `001_interviews.sql`
+   3. `002_interviews_rls.sql`
+   4. `003_rename_notes_to_description.sql`
+   5. `004_add_interview_type.sql`
 
-   alter table applications enable row level security;
+3. Create a file named `.env.local` in the project root and add your project's URL and anon key (Supabase dashboard → Project Settings → API):
 
-   create policy "users manage own applications"
-   on applications for all to authenticated
-   using (auth.uid() = user_id)
-   with check (auth.uid() = user_id);
+```
+   VITE_SUPABASE_URL=your-project-url
+   VITE_SUPABASE_ANON_KEY=your-anon-key
+```
+
+4. Install and start:
+
+```
+   npm install
+   npm run dev
 ```
