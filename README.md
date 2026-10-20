@@ -4,11 +4,12 @@ A small job application tracker, built over a weekend as an experiment in AI-ass
 
 ## What it does
 
+A tracker for job seekers to keep a record of their applications and everything that happens with each company.
+
 - Sign up and sign in with email and password
-- Add a company
-- Change its status (Applied / Interview / Rejected) and save it
-- Delete an application, with a confirmation
-- Each user can only see and edit their own applications
+- Add, edit and delete a company, with a description and a status (Applied / Interview / Rejected)
+- Add, edit and delete activities for each company (interviews, calls and mails), with a date, a type and notes
+- Each user can only see and edit their own data: Row Level Security in the database checks that every row belongs to the logged-in user
 - Light and dark mode, with a toggle that remembers your choice
 
 ## Tech stack
