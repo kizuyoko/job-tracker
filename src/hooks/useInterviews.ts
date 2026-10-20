@@ -39,5 +39,28 @@ export function useInterviews(applicationId: string) {
     else load()
   }
 
-  return { items, error, add, remove }
+  async function update(
+    id: string,
+    interviewDate: string | null,
+    activityType: ActivityType,
+    notes: string,
+  ) {
+    const { error } = await supabase
+      .from('interviews')
+      .update({
+        interview_date: interviewDate,
+        activity_type: activityType,
+        notes: notes || null,
+      })
+      .eq('id', id)
+    if (error) {
+      setError(error.message)
+      return false
+    }
+    load()
+    return true
+  }  
+
+  return { items, error, add, remove, update }
 }
+
