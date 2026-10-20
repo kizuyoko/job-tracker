@@ -3,6 +3,7 @@ import { activityTypes } from '../types/interview'
 import type { ActivityType, Interview } from '../types/interview'
 import Button from './ui/Button'
 import Input from './ui/Input'
+import Select from './ui/Select'
 
 type Props = {
   interview: Interview
@@ -63,20 +64,22 @@ export default function InterviewRow({ interview, onRemove, onUpdate }: Props) {
         {isEditing ? (
           <div className="mr-2 flex flex-1 gap-2">
             <Input
+              size="sm"
               type="datetime-local"
               className="flex-1"
               value={editDate}
               onChange={(e) => setEditDate(e.target.value)}
             />
-            <select
-              className="flex-1 rounded border bg-white px-2 py-1 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-200"
+            <Select
+              size="sm"
+              className="flex-1"
               value={editActivityType}
               onChange={(e) => setEditActivityType(e.target.value as ActivityType)}
             >
               {activityTypes.map((t) => (
                 <option key={t} value={t}>{t}</option>
               ))}
-            </select>
+            </Select>
           </div>
         ) : (
           <p className="font-medium text-gray-900 dark:text-gray-100 w-full">
