@@ -44,7 +44,7 @@ export function useInterviews(applicationId: string) {
     interviewDate: string | null,
     activityType: ActivityType,
     notes: string,
-  ) {
+  ): Promise<{ ok: boolean; message: string | null }> {
     const { error } = await supabase
       .from('interviews')
       .update({
@@ -55,11 +55,13 @@ export function useInterviews(applicationId: string) {
       .eq('id', id)
     if (error) {
       setError(error.message)
-      return false
+      return { ok: false, message: null }
     }
     load()
-    return true
-  }  
+    const { data, error: helloError } = await supabase.functions.invoke('hello')
+    console.log('hello:', data, helloError)
+    return { ok: true, message: helloError ? null : data }
+  }
 
   return { items, error, add, remove, update }
 }

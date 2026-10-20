@@ -12,7 +12,7 @@ type Props = {
     interviewDate: string | null,
     activityType: ActivityType,
     notes: string,
-  ) => Promise<boolean>
+  ) => Promise<{ ok: boolean; message: string | null }>
 }
 
 function toLocalInput(iso: string | null): string {
@@ -27,15 +27,20 @@ export default function InterviewRow({ interview, onRemove, onUpdate }: Props) {
   const [editDate, setEditDate] = useState(toLocalInput(interview.interview_date))  
   const [editActivityType, setEditActivityType] = useState<ActivityType>(interview.activity_type)
   const [editNotes, setEditNotes] = useState(interview.notes ?? '')
-
+  const [helloMessage, setHelloMessage] = useState<string | null>(null)
+  
   async function save() {
-    const ok = await onUpdate(
+    const { ok, message } = await onUpdate(
       interview.id,
       editDate ? new Date(editDate).toISOString() : null,
       editActivityType,
       editNotes,
     )
-    if (ok) setIsEditing(false)
+    if (ok) {
+      setHelloMessage(message)
+      setTimeout(() => setHelloMessage(null), 3000)
+      setIsEditing(false)
+    }
   }
 
   function cancel() {
@@ -74,7 +79,7 @@ export default function InterviewRow({ interview, onRemove, onUpdate }: Props) {
             </select>
           </div>
         ) : (
-          <p className="font-medium text-gray-900 dark:text-gray-100">
+          <p className="font-medium text-gray-900 dark:text-gray-100 w-full">
             {date}
             <span className="ml-2 rounded bg-gray-100 px-2 py-0.5 text-xs font-normal text-gray-700 dark:bg-gray-700 dark:text-gray-200">
               {interview.activity_type}
@@ -92,7 +97,10 @@ export default function InterviewRow({ interview, onRemove, onUpdate }: Props) {
             <Button color="red" size="xs" onClick={() => onRemove(interview.id)}>Delete</Button>
           </div>
         )}
-      </div>
+      </div>        
+      {helloMessage && (
+          <p className="mt-1 text-sm text-green-600">{helloMessage}</p>
+        )} 
       {isEditing ? (
         <Input
           size="sm"
