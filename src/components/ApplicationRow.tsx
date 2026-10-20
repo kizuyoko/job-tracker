@@ -15,7 +15,7 @@ type Props = {
 
 export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdate }: Props) {
     const [draft, setDraft] = useState(item.status)
-    const { items: interviews, add, remove } = useInterviews(item.id)
+    const { items: interviews, add, remove, update } = useInterviews(item.id)
     const [isEditing, setIsEditing] = useState(false)
     const [editCompany, setEditCompany] = useState(item.company)
     const [editDescription, setEditDescription] = useState(item.description ?? '')
@@ -98,7 +98,7 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
             {interviews.length > 0 && (
                 <div className="mt-3 space-y-2">
                     {interviews.map((interview) => (
-                        <InterviewRow key={interview.id} interview={interview} onRemove={remove} />
+                        <InterviewRow key={interview.id} interview={interview} onRemove={remove} onUpdate={update} />
                     ))}
                 </div>
             )}
