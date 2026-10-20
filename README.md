@@ -16,7 +16,8 @@ A tracker for job seekers to keep a record of their applications and everything 
 
 - React + TypeScript (Vite)
 - Tailwind CSS
-- Supabase (PostgreSQL, Auth, Row Level Security)
+- Supabase (PostgreSQL, Auth, Row Level Security, Edge Functions)
+- Vercel (hosting)
 - GitHub
 
 ## How I worked
