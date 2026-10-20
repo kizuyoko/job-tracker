@@ -5,6 +5,8 @@ import InterviewRow from "./InterviewRow"
 import InterviewForm from "./InterviewForm"
 import Button from "./ui/Button"
 import Textarea from "./ui/Textarea"
+import Input from "./ui/Input"
+import Select from "./ui/Select"
 
 type Props = {
     item: Application
@@ -27,8 +29,8 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
                 <div className="flex-1 flex flex-col gap-1 mr-2">
                      {isEditing ? (
                         <>
-                            <input
-                                className="rounded border px-2 py-1 font-semibold mb-1"
+                            <Input size="sm"
+                                className="font-semibold mb-1"
                                 value={editCompany}
                                 onChange={(e) => setEditCompany(e.target.value)}
                             />
@@ -81,15 +83,16 @@ export default function ApplicationRow({ item, onUpdateStatus, onRemove, onUpdat
             {helloMessage && (
                 <p className="mb-2 text-sm text-green-600">{helloMessage}</p>
             )}            
-            <select
-                className="mt-1 rounded border bg-white px-2 py-1 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-200"
+            <Select
+                size="sm"
+                className="mt-1 inline-block"
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
             >
                 <option value="applied">Applied</option>
                 <option value="interview">Interview</option>
                 <option value="rejected">Rejected</option>
-            </select>
+            </Select>
             {draft !== item.status && (
                 <Button color="green" className="ml-2" onClick={() => onUpdateStatus(item.id, draft)}>
                     Save
