@@ -21,8 +21,9 @@ export function useInterviews(applicationId: string) {
     load()
   }, [load])
 
-  async function add(interviewDate: string | null, activityType: ActivityType, notes: string) {
-    const { error } = await supabase.from('interviews').insert({
+async function add(interviewDate: string | null, activityType: ActivityType, notes: string) {
+  setError(null) 
+  const { error } = await supabase.from('interviews').insert({
       application_id: applicationId,
       interview_date: interviewDate,
       activity_type: activityType,
@@ -32,19 +33,20 @@ export function useInterviews(applicationId: string) {
     else load()
   }
 
-  async function remove(id: string) {
-    if (!window.confirm('Delete this interview?')) return
-    const { error } = await supabase.from('interviews').delete().eq('id', id)
-    if (error) setError(error.message)
-    else load()
-  }
+async function remove(id: string): Promise<string | null> {
+  const { error } = await supabase.from('interviews').delete().eq('id', id)
+  if (error) return error.message
+  load()
+  return null
+}
 
-  async function update(
+async function update(
     id: string,
     interviewDate: string | null,
     activityType: ActivityType,
     notes: string,
   ): Promise<{ ok: boolean; message: string | null }> {
+    setError(null) 
     const { error } = await supabase
       .from('interviews')
       .update({
@@ -54,8 +56,7 @@ export function useInterviews(applicationId: string) {
       })
       .eq('id', id)
     if (error) {
-      setError(error.message)
-      return { ok: false, message: null }
+      return { ok: false, message: error.message }
     }
     load()
     const { data, error: helloError } = await supabase.functions.invoke('hello')

@@ -7,7 +7,7 @@ import Select from './ui/Select'
 
 type Props = {
   interview: Interview
-  onRemove: (id: string) => void
+  onRemove: (id: string) => Promise<string | null>
   onUpdate: (
     id: string,
     interviewDate: string | null,
@@ -29,8 +29,17 @@ export default function InterviewRow({ interview, onRemove, onUpdate }: Props) {
   const [editActivityType, setEditActivityType] = useState<ActivityType>(interview.activity_type)
   const [editNotes, setEditNotes] = useState(interview.notes ?? '')
   const [helloMessage, setHelloMessage] = useState<string | null>(null)
-  
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)  
+
+  async function handleDelete() {
+    if (!window.confirm('Delete this interview?')) return
+    setErrorMessage(null)
+    const message = await onRemove(interview.id)
+    setErrorMessage(message)
+  }
+
   async function save() {
+    setErrorMessage(null)   // ← 追加
     const { ok, message } = await onUpdate(
       interview.id,
       editDate ? new Date(editDate).toISOString() : null,
@@ -41,10 +50,13 @@ export default function InterviewRow({ interview, onRemove, onUpdate }: Props) {
       setHelloMessage(message)
       setTimeout(() => setHelloMessage(null), 3000)
       setIsEditing(false)
+    } else {
+      setErrorMessage(message)   // ← 追加
     }
   }
 
   function cancel() {
+    setErrorMessage(null) 
     setEditDate(toLocalInput(interview.interview_date))
     setEditActivityType(interview.activity_type)
     setEditNotes(interview.notes ?? '')
@@ -97,13 +109,16 @@ export default function InterviewRow({ interview, onRemove, onUpdate }: Props) {
         ) : (
           <div className="flex gap-2">
             <Button color="green" size="xs" onClick={() => setIsEditing(true)}>Update</Button>
-            <Button color="red" size="xs" onClick={() => onRemove(interview.id)}>Delete</Button>
+            <Button color="red" size="xs" onClick={handleDelete}>Delete</Button>
           </div>
         )}
       </div>        
       {helloMessage && (
           <p className="mt-1 text-sm text-green-600">{helloMessage}</p>
-        )} 
+        )}
+      {errorMessage && (
+        <p className="mt-1 text-sm text-red-600">{errorMessage}</p>
+      )}         
       {isEditing ? (
         <Input
           size="sm"
