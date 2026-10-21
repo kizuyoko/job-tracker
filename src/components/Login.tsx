@@ -22,7 +22,7 @@ export default function Login() {
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-sm flex-col justify-center p-6">
+    <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center p-6">
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Job Tracker</h1>
         <ThemeToggle />
