@@ -4,6 +4,7 @@ import type { ActivityType, Interview } from '../types/interview'
 import Button from './ui/Button'
 import Input from './ui/Input'
 import Select from './ui/Select'
+import { toLocalInput } from '../utils/toLocalInput'
 
 type Props = {
   interview: Interview
@@ -14,13 +15,6 @@ type Props = {
     activityType: ActivityType,
     notes: string,
   ) => Promise<{ ok: boolean; message: string | null }>
-}
-
-function toLocalInput(iso: string | null): string {
-  if (!iso) return ''
-  const d = new Date(iso)
-  const pad = (n: number) => String(n).padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
 export default function InterviewRow({ interview, onRemove, onUpdate }: Props) {
