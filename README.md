@@ -2,6 +2,10 @@
 
 A small job application tracker, built over a weekend as an experiment in AI-assisted development.
 
+**Live demo:** https://job-tracker-henna-mu-33.vercel.app/
+
+![Job Tracker screenshot](docs/screenshot.png)
+
 ## What it does
 
 A tracker for job seekers to keep a record of their applications and everything that happens with each company.
@@ -11,12 +15,14 @@ A tracker for job seekers to keep a record of their applications and everything 
 - Add, edit and delete activities for each company (interviews, calls and mails), with a date, a type and notes
 - Each user can only see and edit their own data: Row Level Security in the database checks that every row belongs to the logged-in user
 - Light and dark mode, with a toggle that remembers your choice
+- If saving or deleting an activity fails, the error is shown in red inside that activity's row. It clears on the next save or delete, or when you press Cancel
 
 ## Tech stack
 
 - React + TypeScript (Vite)
 - Tailwind CSS
 - Supabase (PostgreSQL, Auth, Row Level Security, Edge Functions)
+- Vitest (unit tests)
 - Vercel (hosting)
 - GitHub
 
@@ -32,7 +38,7 @@ I used AI to generate code and to explain errors, and made the design decisions 
 
 ## Known limitations
 
-- Errors from saving or deleting an activity are not shown on screen, and errors that are shown are never cleared.
+- Errors from adding an activity or loading the list appear below the list instead of in a row, and stay until the next add.
 - No password reset.
 - The code still uses "interview" in file and table names, while the screen says "Activity".
 
@@ -60,3 +66,13 @@ I used AI to generate code and to explain errors, and made the design decisions 
    npm install
    npm run dev
 ```
+
+## Run tests
+
+```
+npm test
+```
+
+Tests use Vitest and run once (`vitest run`). Test files are named `*.test.ts` and sit next to the code they test, for example `src/utils/toLocalInput.test.ts`.
+
+The date tests fix the time zone to `Europe/Stockholm` (see `vitest.global-setup.ts`), so they give the same result on any machine.
