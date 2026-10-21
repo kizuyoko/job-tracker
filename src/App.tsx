@@ -7,6 +7,7 @@ import AddForm from './components/AddForm'
 import Login from './components/Login'
 import SignOutButton from './components/SignOutButton'
 import ThemeToggle from './components/ThemeToggle'
+import Footer from './components/Footer'
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null)
@@ -20,33 +21,43 @@ export default function App() {
     return () => listener.subscription.unsubscribe()
   }, [])
 
-  if (!session) return <Login />
+  if (!session) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <Login />
+        <Footer />
+      </div>
+    )
+  }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center p-6">
-      <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Job Tracker</h1>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <SignOutButton />
+    <div className="flex min-h-screen flex-col">
+      <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <h1 className="text-2xl font-bold">Job Tracker</h1>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <SignOutButton />
+          </div>
         </div>
+        {error && <p className="text-red-600 dark:text-red-400">Error: {error}</p>}
+        {items.length === 0 && !error && (
+          <p className="text-gray-500">No applications yet</p>
+        )}
+        <AddForm onAdd={add} />
+        <ul className="space-y-2">
+          {items.map((a) => (
+            <ApplicationRow
+              key={a.id}
+              item={a}
+              onUpdateStatus={updateStatus}
+              onUpdate={update}
+              onRemove={remove}
+            />
+          ))}
+        </ul>
       </div>
-      {error && <p className="text-red-600 dark:text-red-400">Error: {error}</p>}
-      {items.length === 0 && !error && (
-        <p className="text-gray-500">No applications yet</p>
-      )}
-      <AddForm onAdd={add} />
-      <ul className="space-y-2">
-        {items.map((a) => (
-          <ApplicationRow
-            key={a.id}
-            item={a}
-            onUpdateStatus={updateStatus}
-            onUpdate={update}
-            onRemove={remove}
-          />
-        ))}
-      </ul>
+      <Footer />
     </div>
   )
 }
